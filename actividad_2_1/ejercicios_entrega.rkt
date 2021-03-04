@@ -33,12 +33,17 @@
 ; La función de list-of-symbols? toma una lista lst como entrada. Devuelve verdadero si todos los elementos (posiblemente cero) contenidos en lst son símbolos, o falso en caso contrario.
 (define (list-of-symbols? lst)
     (let loop
+        ; Inicializar nueva lista y variable booleana que va a checar si el valor es un símbolo
         ([lst lst] [check #t])
         (if (empty? lst)
+            ; Si la lista está vacía regresa check
             check
-            (if (not (symbol? (car lst)))
-                #f
+            ; Checa si el primer elemento de la lista es un símbolo
+            (if (symbol? (car lst))
+                ; Cuando sí es un símbolo procede a checar el resto de los elementos de la lista
                 (loop (cdr lst) #t)
+                ; Cuando no es un símbolo regresa false y deja de checar los elementos de la lista que siguen
+                #f
             )
         )
     )
