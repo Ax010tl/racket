@@ -10,19 +10,19 @@
 
 ;6 La función deep-reverse toma una lista como entrada. Devuelve una lista con los mismos elementos que su entrada pero en orden inverso. Si hay listas anidadas, estas también deben invertirse.
 (define (deep-reverse lst)
-    ; Función loop para iterar la lista
+    ; Loop trough the list
     (let loop
         ([lst lst] [res empty])
         (if (empty? lst)
-            ; Si la lista está vacía, devolver la nueva lista
+            ; If the list is empty, return new list
             res
-            ; Si la lista no está vacía, realizar el siguiente procedimiento
+            ; If the list is not empty, do the following 
             (let
-                ; Almacenar el primer valor en la lista
+                ; Store the first value of the list 
                 ([ element (first lst) ])
                 (if(list? element)
-                    ; Si el primer elemento es lista, aplicar esta función
-                    ; Agregar el resto de la lista a res
+                    ; If this element is a list, apply the following function
+                    ; Add the remaining elements of the list 
                     (loop (rest lst) ( cons (deep-reverse element) res ) )
                     (loop (rest lst) ( cons element res ) )
                 )
@@ -35,7 +35,8 @@
 ; 13 La función args-swap toma como entrada una función de dos argumentos f y devuelve una nueva función que se comporta como f pero con el orden de sus dos argumentos intercambiados
 
 (define ((args-swap function) a b)
-  (function b a)
+    ; Return the function with the parameters swapped 
+    (function b a)
 )
 
 ; 14 La función there-exists-one? toma dos entradas: una función booleana de un argumento pred y una lista lst. Devuelve verdadero si hay exactamente un elemento en lst que satisface pred, en otro caso devuelve falso.
@@ -44,14 +45,14 @@
         ([lst lst] [count 0] [res #f])
         (if (empty? lst)
             res
-            ; checar con función
+            ; Check with function 
             (if (pred (car lst))
-                ; checar que solo haya un elemento que ya haya cumplido
+                ; Check if there's only one element that fulfills the condition 
                 (if (= 1 count)
                     #f
                     (loop (cdr lst) (+ count 1) #t)
                 )
-                ; seguir buscando en lst
+                ; Keep searching in lst 
                 (loop (cdr lst) count res)
             )
         )
@@ -63,12 +64,12 @@
     (let loop
         ([lst lst] [index 0])
         (if (empty? lst)
-            ; si la lista no tiene el elemento
+            ; If the list doesnt have the element
             #f
             (if (eq-fun x (car lst))
-                ; elemento encontrado :D
+                ; Element found :D
                 index
-                ; sigue buscando el elemento... ;(
+                ; Keep searching for the element... ;(
                 (loop (cdr lst) (+ index 1))
             )
         )
