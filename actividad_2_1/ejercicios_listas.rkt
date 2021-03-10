@@ -1,4 +1,20 @@
 #lang racket
+
+; Ejercicio 6 
+; Duplicar todos los elementos 
+(define (duplicate lst)
+    (let loop
+        ([lst lst] [result empty])
+        (if (empty? lst)
+            result
+            (loop
+                (cdr lst)
+                (append result (list (car lst) (car lst)))
+            )
+        )
+    )
+)
+
 ; Ejercicio 10 :D
 ; Regresar lista con números positivos
 (define (positives lista)
