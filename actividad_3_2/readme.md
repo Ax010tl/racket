@@ -1,88 +1,41 @@
-# Deterministic Finite Automaton
+# User Manual
+This is a deterministic finite automata, that accepts arithmetic expressions with decimal point and returns a list with each found token, in the order in which they were found and indicating their type.
+## Prerequisites
+The DFA was developed with Racket. <br>
+Pre-built versions of Racket for a variety of operating systems and architectures, as well as convenient source distributions are available at
+https://download.racket-lang.org
 
-## Instrucciones
-Hacer una función que reciba como argumento un string que contenga expresiones aritméticas y comentarios, y nos regrese una lista con cada uno de sus tokens encontrados, en el orden en que fueron encontrados e indicando de qué tipo son.
+## Getting Started
 
-## Tipos de tokens
-Las expresiones aritméticas sólo podrán contener los siguientes tipos de tokens:
-- Enteros
-- Flotantes (Reales)
-- Operadores:
-- Asignación
-- Suma
-- Resta
-- Multiplicación
-- División
-- Potencia
-- Identificadores:
-- Variables
-- Símbolos especiales:
-    - (
-    - )
-- Comentarios:
-    - // seguido de caracteres hasta que se acabe el renglón
- 
+### Installation
+1. Download and install Racket (https://download.racket-lang.org)
 
-## Función principal
+2. Try typing `racket` on your command line, and you should see something like this: 
+    ``` bash
+    ~ : racket
 
-El programa podrá estar formado con las funciones que requiera, pero la función principal tendrá la siguiente forma:
+    Welcome to Racket v.8.0.
 
-    void arithmetic-lexer(string expression);
+    >
+    ```
+    If this is the case, you are ready to run Racket programs. 👍
 
-donde expression es un string que representa una operación aritmética
+    But, if you get an error like this: 
+    ``` bash
+    Unrecognized command: racket
+    ```
+    It means something went wrong with the installation. 😭 Try installing it again. 
 
-## Entrada
-Los tokens no necesariamente deben estar separados por un espacio en blanco, o pueden tener separación de más de un blanco
-Por ejemplo:
+### Clone this repo
+All the necessary code is included in this repository. To download it in your machine, run the command:
+```bash
+git clone https://github.com/Ax010tl/racket.git
+```
+The code is contained in `actividad_3_2/dfa.rkt`. To run it, open the racket shell by typing `racket` and then run the command
+``` lisp
+> (enter! "actividad_3_2/dfa.rkt")
+```
+## Examples
 
-    b=7
-    a = 32.4 *(-8.6 - b)/       6.1E-8
-    d = a ^ b // Esto es un comentario
+//indicando cómo correr su programa y qué se obtiene de salida, en qué lenguaje lo hizo y qué tengo que instalar para que funcione
 
- 
-## Salida
-Debe entregar la siguiente salida:
-| Token  | Tipo                  |
-|--------|-----------------------|
-| b      | Variable              |
-| =      | Asignación            |
-| 7      | Entero                |
-| a      | Variable              |
-| =      | Asignación            |
-| 32.4   | Real                  |
-| *      | Multiplicación        |
-| (      | Paréntesis que abre   |
-| -8.6   | Real                  |
-| -      | Resta                 |
-| b      | Variable              |
-| )      | Paréntesis que cierra |
-| 6.1E-8 | Real                  |
-| d      | Variable              |
-| =      | Asignación            |
-| ^      | Potencia              |
-| b      | Variable              |
-| //     | Comentario            |
-
-## Reglas de formación de algunos tokens
-
-- Variables: 
-    - Deben empezar con una letra (mayúscula o minúscula).
-    - Sólo están formadas por letras, números y underscore (‘_’).
-- Números reales (de punto flotante):
-    - Pueden ser positivos o negativos
-    - Pueden o no tener parte decimal pero deben contener un punto (e.g. 10. o 10.0)
-    - Pueden usar notación exponencial con la letra E, mayúscula o minúscula, pero después de la letra E sólo puede ir un entero positivo o negativo (e.g. 2.3E3, 6.345e-5, -0.001E-3, .467E9). (OPCIONAL)
-- Comentarios:
-    - Inician con // y todo lo que sigue hasta que termina el renglón es un comentario (OPCIONAL)
- 
-
-## Algoritmo
-
-- El reconocimiento de tokens se debe hacer por medio de la tabla de transición de un Autómata Finito Determinístico.
-- El diseño del autómata debe ser parte fundamental de la documentación (utilice alguna herramienta computacional para dibujarlo, no lo haga a mano).
- 
-
-## Documentación:
-
-- Manual del usuario, indicando cómo correr su programa y qué se obtiene de salida, en qué lenguaje lo hizo y qué tengo que instalar para que funcione.
-- El autómata que resuelve el problema (como un anexo del punto 1).
