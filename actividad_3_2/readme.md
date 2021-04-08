@@ -1,5 +1,5 @@
 # User Manual
-This is a deterministic finite automata, that accepts arithmetic expressions with decimal point and returns a list with each found token, in the order in which they were found and indicating their type.
+This is a deterministic finite automata that accepts arithmetic expressions with decimal point and returns a list with each found token, in the order in which they were found and indicating their type.
 ## Prerequisites
 The DFA was developed with Racket. <br>
 Pre-built versions of Racket for a variety of operating systems and architectures, as well as convenient source distributions are available at
@@ -36,6 +36,21 @@ The code is contained in `actividad_3_2/dfa.rkt`. To run it, open the racket she
 > (enter! "actividad_3_2/dfa.rkt")
 ```
 ## Examples
+We implemented the function `arithmetic-lexer`, which receives a string and returns a list of the type of all found tokens.
 
-//indicando cómo correr su programa y qué se obtiene de salida, en qué lenguaje lo hizo y qué tengo que instalar para que funcione
+### Example 1: Binary operation
+``` lisp
+> (arithmetic-lexer "1+1")
+'(int operator int)
+```
+### Example 2: Binary operation with variable and spaces
+``` lisp
+> (arithmetic-lexer "PI + 3")
+'(variable operator int)
+```
+### Example 3: Complex operation with real numbers and multiple operators
+``` lisp
+> (arithmetic-lexer "a = 2^(3.2 * b)")
+'(variable operator int operator parenthesis float operator variable parenthesis)
+```
 
