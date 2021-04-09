@@ -36,17 +36,17 @@ The code is contained in `actividad_3_2/dfa.rkt`. To run it, open the racket she
 > (enter! "actividad_3_2/dfa.rkt")
 ```
 ## Examples
-We implemented the function `arithmetic-lexer`, which receives a string and returns a list of the type of all found tokens.
+We implemented the function `arithmetic-lexer`, which receives a string and returns a list of the all found tokens and their type.
 
 ### Example 1: Binary operation
 ``` lisp
-> (arithmetic-lexer "1+1")
-'(int operator int)
+> (arithmetic-lexer "5+7")
+'(("5" int) ("+" operator) ("7" int))
 ```
 ### Example 2: Binary operation with variable and spaces
 ``` lisp
-> (arithmetic-lexer "PI + 3")
-'(variable operator int)
+> (arithmetic-lexer "3 + PI")
+'(("5" int) ("+" operator) ("PI" variable))
 ```
 ### Example 3: Complex operation with real numbers and multiple operators
 ``` lisp
