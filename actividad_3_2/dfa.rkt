@@ -49,10 +49,10 @@ Lourdes Badillo, A01024232
           transition
           state
           ; Add valid items to the list
-          (if token-type
-            (list item)
-            (if (char-blank? item)
-              empty
+          (if (char-blank? item)
+            empty
+            (if token-type
+              (list item)
               (append item-list (list item))))
           ; Add valid tokens to the list
           (if token-type

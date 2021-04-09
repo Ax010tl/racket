@@ -46,11 +46,19 @@ We implemented the function `arithmetic-lexer`, which receives a string and retu
 ### Example 2: Binary operation with variable and spaces
 ``` lisp
 > (arithmetic-lexer "3 + PI")
-'(("5" int) ("+" operator) ("PI" variable))
+'(("3" int) ("+" operator) ("PI" variable))
 ```
 ### Example 3: Complex operation with real numbers and multiple operators
 ``` lisp
 > (arithmetic-lexer "a = 2^(3.2 * b)")
-'(variable operator int operator parenthesis float operator variable parenthesis)
+''(("a" variable)
+  ("=" operator)
+  ("2" int)
+  ("^" operator)
+  ("(" parenthesis)
+  ("3.2" float)
+  ("*" operator)
+  ("b" variable)
+  (")" parenthesis))
 ```
 
