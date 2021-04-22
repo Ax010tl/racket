@@ -1,0 +1,46 @@
+((2 int))
+((261 int))
+((-63 int))
+((5.23 float))
+((-5.23 float))
+#f
+#f
+#f
+#f
+#f
+#f
+#f
+((data variable))
+((data34 variable))
+#f
+((2 int) (+ operator) (1 int))
+((5.2 float) (+ operator) (3 int))
+((5.2 float) (+ operator) (3.7 float))
+#f
+#f
+((one variable) (+ operator) (two variable))
+((one variable) (+ operator) (two variable) (/ operator) (45.2 float))
+#f
+#f
+((2 int) (+ operator) (1 int))
+((6 int) (= operator) (2 int) (+ operator) (1 int))
+((one variable) (+ operator) (two variable) (/ operator) (45.2 float))
+((97 int) (/ operator) (6 int) (= operator) (2 int) (+ operator) (1 int))
+((7.4 float) (^ operator) (3 int) (= operator) (2.0 float) (* operator) (1 int))
+#f
+#f
+((( parenthesis) (45 int) () parenthesis))
+((( parenthesis) (45 int) () parenthesis))
+((( parenthesis) (4 int) (+ operator) (5 int) () parenthesis))
+((( parenthesis) (4 int) (+ operator) (5 int) () parenthesis) (* operator) (( parenthesis) (6 int) (- operator) (3 int) () parenthesis))
+#f
+#f
+#f
+#f
+#f
+#f
+#f
+#f
+#f
+((2 int) (+ operator) (1 int))
+((2 int) (+ operator) (1 int))
