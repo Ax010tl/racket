@@ -14,10 +14,11 @@
 
     "cosas": {
         "titulo": "Blah blah", 
-        "fecha": "2012-04-23T18:25:43.511Z"
+        "fecha": "2012/04/23T18:25:43.511Z"
     },
     "explorer.confirmDragAndDrop": false,
     "window.zoomLevel": 1,
-    "nombres:aa[]dd": 3
+    "nombres:aa[]dd": 30,
+    "aaa": -1.5
 }
 
