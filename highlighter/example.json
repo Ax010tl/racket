@@ -31,12 +31,10 @@
         "exponent": 2e19,
         "negative-integer": -21,
         "negative-float": -100.5,
-        "negative-exponents": 2E-19,
+        "negative-exponents": 2E+19,
         "fun-number": -7.2E-2,
         "emoji": "💻",
         "boolean": false,
         "weird-string": "☺︎☽☾☁︎☂︎☔︎☃︎★☆☇☭"
-    },
-    "test": ""
+    }
 }
-

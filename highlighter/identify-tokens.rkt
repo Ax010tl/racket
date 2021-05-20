@@ -7,7 +7,7 @@ Lourdes Badillo, A01024232
 
 #lang racket
 
-(define (aiuda in-path)
+(define (replace-match in-path)
   ; Store the content in lines (string list)
   (define lines (file->lines in-path))
   (let loop
@@ -17,25 +17,23 @@ Lourdes Badillo, A01024232
         ; (display " ")
         res
         ; if not empty, do this        
-        (let* (
-            [dis-line (car lines)]
-            ; Find all numbers with regex and replace them with html format
-            [dis-line (regexp-replace* #px"[^\"\\w:](\\-)?\\d+(\\.\\d+)?([Ee][+\\-]?\\d*)?" dis-line "<span class='numbers'>&</span>")]
-            ; Find all keys with regex and replace them with html format
-            [dis-line (regexp-replace* #px"(\")(.*?\")(:)" dis-line "<span class='keys'>\\1</span><span class='keys'>\\2</span>\\3")]
-            ; Find all strings with regex and replace them with html format
-            [dis-line (regexp-replace* #px"(?:\"(?:.*?)\")" dis-line "<span class='strings'>&</span>")]
-            ; Find all chars with regex and replace them with html format
-            [dis-line (regexp-replace* #px"'[\\w\\W]'" dis-line "<span class='chars'>&</span>")]
-            ; Find all booleans with regex and replace them with html format"
-            [dis-line (regexp-replace* #px"\\b(?:true|false|null)\\b" dis-line "<span class='bools'>&</span>")]
-            ; Find all special elements with regex and replace them with html format
-            [dis-line (regexp-replace* #px"[,\\[\\]{}:]" dis-line "<span class='special'>&</span>")]
-        ) 
-            (loop (cdr lines) (append res (list dis-line))) )
-    )
-  )
-)
+        (let* 
+          ([dis-line (car lines)]
+           ; Find all numbers with regex and replace them with html format
+           [dis-line (regexp-replace* #px"[^\"\\w:](\\-)?\\d+(\\.\\d+)?([Ee][+\\-]?\\d*)?" dis-line "<span class='numbers'>&</span>")]
+           ; Find all keys with regex and replace them with html format
+           [dis-line (regexp-replace* #px"(\")(.*?\")(:)" dis-line "<span class='keys'>\\1</span><span class='keys'>\\2</span>\\3")]
+           ; Find all chars with regex and replace them with html format
+           [dis-line (regexp-replace* #px"'[\\w\\W]'" dis-line "<span class='chars'>&</span>")]
+           ; Find all booleans with regex and replace them with html format
+           [dis-line (regexp-replace* #px"\\b(?:true|false|null)\\b" dis-line "<span class='bools'>&</span>")]
+           ; Find all special elements with regex and replace them with html format
+           [dis-line (regexp-replace* #px"[,\\[\\]{}:]" dis-line "<span class='special'>&</span>")]
+           ; Find all strings with regex and replace them with html format
+           [dis-line (regexp-replace* #px"\"(.*?)\"" dis-line "<span class='strings'>&</span>")])
+          
+          ; go to the next line of the document
+          (loop (cdr lines) (append res (list dis-line))) ))))
 
 
 (define (write-file in-path out-path)
@@ -56,17 +54,25 @@ Lourdes Badillo, A01024232
         out)))
   
   ; Add highlighted syntax
-  (display-lines-to-file (aiuda in-path) out-path #:exists 'append)
+  (display-lines-to-file (replace-match in-path) out-path #:exists 'append)
 
   ; Add HTML to bottom
   (call-with-output-file out-path #:exists 'append
     (lambda (out)
-      (display "<footer>Made with 🎾 and ❤️ by Lourdes, Valeria and Eduardo</footer>
+      (display "<footer>Made with 🏓 and ❤️ by Lourdes, Valeria and Eduardo</footer>
         </body>
         </html>"
-        out)))
-)
+        out))))
 
 
+; Measure execution time for the whole algorithm
+(define (timer)
+  (define begin (current-inexact-milliseconds))
+  (write-file "example.json" "result.html")
+  (- (current-inexact-milliseconds) begin))
 
-; TODO: hacer una página muy wapa <3 xd
+; Measure execution time for the replace-match function
+(define (timer2)
+  (define begin (current-inexact-milliseconds))
+  (replace-match "example.json")
+  (- (current-inexact-milliseconds) begin))
