@@ -20,12 +20,11 @@ Lourdes Badillo, A01024232
         (let* (
             [dis-line (car lines)]
             ; Find all numbers with regex and replace them with html format
-            [dis-line (regexp-replace* #px"[^\"\\w:](\\-)?\\d+(?:\\.\\d)?((?:[Ee][+\\-])(?:\\d*))?[^\"\\w:\\/]" dis-line "<span class='numbers'>&</span>")]
+            [dis-line (regexp-replace* #px"[^\"\\w:](\\-)?\\d+(\\.\\d+)?([Ee][+\\-]?\\d*)?" dis-line "<span class='numbers'>&</span>")]
+            ; Find all keys with regex and replace them with html format
+            [dis-line (regexp-replace* #px"(\")(.*?\")(:)" dis-line "<span class='keys'>\\1</span><span class='keys'>\\2</span>\\3")]
             ; Find all strings with regex and replace them with html format
             [dis-line (regexp-replace* #px"(?:\"(?:.*?)\")" dis-line "<span class='strings'>&</span>")]
-            ; Find all keys with regex and replace them with html format
-            ;[dis-line (regexp-replace* #px"^(?:\"(?:.*?)\")" dis-line "<span class='keys'>&</span> ")]
-            [dis-line (regexp-replace* #px"(?:\"(?:.*?)\":)" dis-line "<span class='keys'>&</span> ")]   
             ; Find all chars with regex and replace them with html format
             [dis-line (regexp-replace* #px"'[\\w\\W]'" dis-line "<span class='chars'>&</span>")]
             ; Find all booleans with regex and replace them with html format"
@@ -33,15 +32,14 @@ Lourdes Badillo, A01024232
             ; Find all special elements with regex and replace them with html format
             [dis-line (regexp-replace* #px"[,\\[\\]{}:]" dis-line "<span class='special'>&</span>")]
         ) 
-            (display dis-line)
             (loop (cdr lines) (append res (list dis-line))) )
     )
   )
 )
 
-; TODO: unirlo todo en una lista y escribirla en un archivo
 
 (define (write-file in-path out-path)
+  ; Add HTML to the top
   (call-with-output-file out-path #:exists 'truncate
     (lambda (out)
       (display "<!DOCTYPE html>
@@ -53,8 +51,20 @@ Lourdes Badillo, A01024232
             <title>JSON Highlighter</title>
             <link rel=\"stylesheet\" href=\"styles.css\">
         </head>
-        <body> <h1>JSON Highlighter</h1>" out)))
+        <body> 
+        <h1>JSON Highlighter</h1>" 
+        out)))
+  
+  ; Add highlighted syntax
   (display-lines-to-file (aiuda in-path) out-path #:exists 'append)
+
+  ; Add HTML to bottom
+  (call-with-output-file out-path #:exists 'append
+    (lambda (out)
+      (display "<footer>Made with 🎾 and ❤️ by Lourdes, Valeria and Eduardo</footer>
+        </body>
+        </html>"
+        out)))
 )
 
 

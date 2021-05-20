@@ -1,24 +1,42 @@
 {
-    "telemetry.enableTelemetry": false,
-    "workbench.colorTheme": "Eva Dark Bold",
-    "editor.fontLigatures": null,
-    "editor.fontWeight": "500",
-    "editor.minimap.enabled": false,
-    "python.pythonPath": "/Users/vpinedagon2000/miniconda3/envs/graff/bin/python",
-    "editor.fontSize": 9,
-    "exponentNumber": 2e10, 
-    "nombres": ["Lourdes", "Valeria", "Eduardo"],
-
-    "workbench.editorAssociations": [{"viewType": "jupyter.notebook.ipynb",
-        "filenamePattern": "*.ipynb"}],
-
-    "cosas": {
-        "titulo": "Blah blah", 
-        "fecha": "2012/04/23T18:25:43.511Z"
+    "project-name": "JSON Highlighter",
+    "team-members": [
+        {
+            "name": "Lourdes", 
+            "id": "A01024232"
+        },
+        {
+            "name": "Valeria", 
+            "id": "A01023979"
+        },
+        {
+            "name": "Eduardo", 
+            "id": "A01023646"
+        }
+    ],
+    "class": {
+        "name": "Implementación de métodos computacionales", 
+        "id": "TC2037.100", 
+        "professor": "Gilberto Echeverría"
     },
-    "explorer.confirmDragAndDrop": false,
-    "window.zoomLevel": 1,
-    "nombres:aa[]dd": 30,
-    "aaa": -1.5
+    "is-our-highlighter-cool": true,
+    "programming-language": "Racket",
+    "is-HTML-a-programming-language": null,
+    "repo-link": "https://github.com/Ax010tl/racket/tree/master/highlighter",
+    "some-examples": {
+        "words": "Blah blah", 
+        "date": "2012-04-23T18:25:43.511Z",
+        "integer": 21,
+        "float": 100.5,
+        "exponent": 2e19,
+        "negative-integer": -21,
+        "negative-float": -100.5,
+        "negative-exponents": 2E-19,
+        "fun-number": -7.2E-2,
+        "emoji": "💻",
+        "boolean": false,
+        "weird-string": "☺︎☽☾☁︎☂︎☔︎☃︎★☆☇☭"
+    },
+    "test": ""
 }
 
