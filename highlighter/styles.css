@@ -16,16 +16,16 @@ h1{
 .strings{
     color: #a9dc76;
 }
-    .strings .numbers, .strings .special{
+    /*.strings .numbers, .strings .special{
         color: inherit !important;
-    }
+    }*/
 
 .keys{
     color: #78dce8 !important; 
 }
-    .keys *{
+    /*.keys *{
         color: inherit !important
-    }
+    }*/
 
 .numbers{
     color: #ab9df2;
@@ -37,7 +37,6 @@ h1{
 
 .bools{
     color: #fc9867;
-    font-weight: bold;
 }
 
 .special{

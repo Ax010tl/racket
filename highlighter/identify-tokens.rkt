@@ -19,18 +19,19 @@ Lourdes Badillo, A01024232
         ; if not empty, do this        
         (let* 
           ([dis-line (car lines)]
-           ; Find all numbers with regex and replace them with html format
-           [dis-line (regexp-replace* #px"[^\"\\w:](\\-)?\\d+(\\.\\d+)?([Ee][+\\-]?\\d*)?" dis-line "<span class='numbers'>&</span>")]
            ; Find all keys with regex and replace them with html format
-           [dis-line (regexp-replace* #px"(\")(.*?\")(:)" dis-line "<span class='keys'>\\1</span><span class='keys'>\\2</span>\\3")]
+           [dis-line (regexp-replace* #px"(?<=)\"(.*?)\"(?=:)" dis-line "<span class='keys'>\\1</span>\\3")]
            ; Find all chars with regex and replace them with html format
            [dis-line (regexp-replace* #px"'[\\w\\W]'" dis-line "<span class='chars'>&</span>")]
            ; Find all booleans with regex and replace them with html format
            [dis-line (regexp-replace* #px"\\b(?:true|false|null)\\b" dis-line "<span class='bools'>&</span>")]
+           ; Find all strings with regex and replace them with html format
+           [dis-line (regexp-replace* #px"\"(.*?)\"" dis-line "<span class='strings'>&</span>")]
+           ; Find all numbers with regex and replace them with html format
+           [dis-line (regexp-replace* #px"[^\"\\w:](\\-)?\\d+(\\.\\d+)?([Ee][+\\-]?\\d*)?" dis-line "<span class='numbers'>&</span>")]
            ; Find all special elements with regex and replace them with html format
            [dis-line (regexp-replace* #px"[,\\[\\]{}:]" dis-line "<span class='special'>&</span>")]
-           ; Find all strings with regex and replace them with html format
-           [dis-line (regexp-replace* #px"\"(.*?)\"" dis-line "<span class='strings'>&</span>")])
+           )
           
           ; go to the next line of the document
           (loop (cdr lines) (append res (list dis-line))) ))))
