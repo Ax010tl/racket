@@ -28,8 +28,7 @@ Lourdes Badillo, A01024232
            ; Find all strings with regex and replace them with html format
            [dis-line (regexp-replace* #px"\"(.*?)\"" dis-line "<span class='strings'>&</span>")]
            ; Find all numbers with regex and replace them with html format
-           ; ?!\\B"[^"]*)-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+\\-]?\\d+)?(?![^"]*"\\B)
-           [dis-line (regexp-replace* #px"(?<= )-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+\\-]?\\d+)?" dis-line "<span class='numbers'>&</span>")]
+           [dis-line (regexp-replace* #px"((?<= )-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+\\-]?\\d+)?)(?=([^\"]\"[^\"]\")[^\"]\\Z)" dis-line "<span class='numbers'>&</span>")]
            ; Find all special elements with regex and replace them with html format
            [dis-line (regexp-replace* #px"[,\\[\\]{}:]" dis-line "<span class='special'>&</span>")]
            )
