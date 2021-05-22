@@ -12,7 +12,7 @@ Utilizando **expresiones regulares**, se pueden identificar los siguientes tipos
 ### Números
 Los números pueden ser valores `enteros`, `fraccionarios`, con `notación científica` y con `signo`.
 ```regex
-[^"\w:](\-)?\d+(?:\.\d)?(((?:[Ee])?(?:[+\-])?(?:\d*)))?
+([^"\w:](\-)?\d+(?:\.\d)?(((?:[Ee])?(?:[+\-])?(?:\d*)))?)(?=([^"]*\"[^"]*")*[^"]*$)
 ```
 ### Booleanos
 Hay tres valores booleanos posibles: `true`, `null` y `false`.
@@ -22,7 +22,7 @@ Hay tres valores booleanos posibles: `true`, `null` y `false`.
 ### Llaves
 Las llaves son cadenas de texto delimitados entre comillas `"`. Tienen dos puntos `:` al final.
 ```regex
-(")(.*?")(:)
+(?<=)"(.*?)" *(?=:)
 ```
 ### Cadenas de texto
 Las cadenas de texto son secuencias de caracteres, que se encuentran entre comillas `"`.
@@ -37,7 +37,7 @@ Los caracteres son identificados con comillas simples `'` y un solo caracter alf
 ### Decoradores (?)
 Los decoradores fue la forma en la que nombramos a los elementos claves de la sintaxis de JSON, tales como **llaves** `{}` para delimitar objetos, **corchetes** `[]` para delimitar arreglos, y **comas** `,` para delimitar propiedades.
 ```regex
-[,\[\]{}:]
+((?<![\w])[:])|[,\[\]{}]
 ```
 
 ## Reflexión
@@ -52,9 +52,9 @@ Reflexión sobre la solución planteada, los algoritmos implementados y sobre el
 
 - Utilizar Racket fue un gran reto para nosotros, tuvimos que cambiar la manera en la que pensamos al programar. Nos pareció muy interesante adoptar este nuevo paradigma de programación funcional, aprendiendo de sus posibilidades y múltiples retos. 
 
-- El algoritmo completo tiene un tiempo de ejecución de 6.78 milisegundos. 
-    - La función `replace-match` tomó 3.29 milisegundos
-    - Por lo que el resto del algoritmo tomó 3.49 milisegundos
+- El algoritmo completo tiene un tiempo de ejecución de 10.68 milisegundos. 
+    - La función `replace-match` tomó 5.47 milisegundos
+    - Por lo que el resto del algoritmo tomó 4.21 milisegundos
 
 - Nos parece que es un algoritmo bastante eficiente, pensamos que iba a tomar más tiempo debido a las expresiones regulares. Esto nos hizo apreciar aun más lo poderosas que son. 
 
@@ -68,4 +68,4 @@ Calcular la complejidad del algoritmo basada en el número de iteraciones y cont
 
 Al leerse el archivo solamente una vez, podemos obtener una complejidad de **O(n)** (donde __n__ es la cantidad de líneas en el archivo).
 
-El tiempo de ejecución fue 6.78 milisegundos. Teniendo una complejidad **O(n)**, consideramos que es un algoritmo eficiente; solo se realizan operaciones la cantidad de veces necesarias, reduciendo el malgasto de recursos.
+El tiempo de ejecución fue 10.68 milisegundos. Teniendo una complejidad **O(n)**, consideramos que es un algoritmo eficiente; solo se realizan operaciones la cantidad de veces necesarias, reduciendo el malgasto de recursos.
