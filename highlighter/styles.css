@@ -16,16 +16,10 @@ h1{
 .strings{
     color: #a9dc76;
 }
-    /*.strings .numbers, .strings .special{
-        color: inherit !important;
-    }*/
 
 .keys{
     color: #78dce8; 
 }
-    /*.keys *{
-        color: inherit !important
-    }*/
 
 .numbers{
     color: #ab9df2;

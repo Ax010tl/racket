@@ -18,23 +18,20 @@ Lourdes Badillo, A01024232
         ; if not empty, do this        
         (let* 
           ([dis-line (car lines)]
-           ; Find all keys with regex and replace them with html format
-           [dis-line (regexp-replace* #px"(?<=)\"(.*?)\" *(?=:)" dis-line "<span class='keys'>%plhldr\\1%plhldr</span>\\3")]
-           ; Find all chars with regex and replace them with html format
-           [dis-line (regexp-replace* #px"'[\\w\\W]'" dis-line "<span class='chars'>&</span>")]
-           ; Find all booleans with regex and replace them with html format
-           [dis-line (regexp-replace* #px"\\b(?:true|false|null)\\b" dis-line "<span class='bools'>&</span>")]
-           ; Find all special elements with regex and replace them with html format
-           [dis-line (regexp-replace* #px"((?<![\\w])[:])|[,\\[\\]{}]" dis-line "<span class='special'>&</span>")]
-           ; Find all strings with regex and replace them with html format
-           [dis-line (regexp-replace* #px"\"(.*?)\"" dis-line "<span class='strings'>&</span>")]
-           ; Find all numbers with regex and replace them with html format
-           [dis-line (regexp-replace* #px"((?<= )-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+\\-]?\\d+)?)(?=([^\"]*\"[^\"]*\")*[^\"]*$)" dis-line "<span class='numbers'>&</span>")]
-           ; add quotes to keys
-           [dis-line (regexp-replace* #px"(?<=>)%plhldr|%plhldr(?=<)" dis-line "\"")]
-           ; changes tabs to spaces, so we don't have indentation problems
-           [dis-line (regexp-replace* #rx"[\t]" dis-line "    ")])
-          
+            ; Find all chars with regex and replace them with html format
+            [dis-line (regexp-replace* #px"'[\\w\\W]'" dis-line "<span class='chars'>&</span>")]
+            ; Find all booleans with regex and replace them with html format
+            [dis-line (regexp-replace* #px"\\b(?:true|false|null)\\b(?=([^\"]*\"[^\"]*\")*[^\"]*$)" dis-line "<span class='bools'>&</span>")]
+            ; Find all strings with regex and replace them with html format
+            [dis-line (regexp-replace* #px"\"(.*?)\"" dis-line "<span class='strings'>&</span>")]
+            ; Find all keys with regex and replace them with html format
+            [dis-line (regexp-replace* #px"(<span class='strings'>)(.*?)(<\\/span>)([\\s]*:)" dis-line "<span class='keys'>\\2</span>\\4")]
+            ; Find all special elements with regex and replace them with html format
+            [dis-line (regexp-replace* #px"((?<![\\w])[:])(?=([^\"]*\"[^\"]*\")*[^\"]*$)|[,\\[\\]{}](?=([^\"]*\"[^\"]*\")*[^\"]*$)" dis-line "<span class='special'>&</span>")]
+            ; Find all numbers with regex and replace them with html format
+            [dis-line (regexp-replace* #px"((?<= )-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+\\-]?\\d+)?)(?=([^\"]*\"[^\"]*\")*[^\"]*$)" dis-line "<span class='numbers'>&</span>")]
+            ; changes tabs to spaces, so we don't have indentation problems
+            [dis-line (regexp-replace* #rx"[\t]" dis-line "    ")])
           ; go to the next line of the document
           (loop (cdr lines) (append res (list dis-line))) ))))
 
@@ -68,14 +65,14 @@ Lourdes Badillo, A01024232
         out))))
 
 
-; Measure execution time for the whole algorithm
-(define (timer)
+; Measure execution time for the whole algorithm, takes in "<filename>.json"
+(define (timer doc)
   (define begin (current-inexact-milliseconds))
-  (write-file "example.json" "result.html")
+  (write-file doc "result.html")
   (- (current-inexact-milliseconds) begin))
 
-; Measure execution time for the replace-match function
-(define (timer2)
+; Measure execution time for the replace-match function, takes in "<filename>.json"
+(define (timer2 doc)
   (define begin (current-inexact-milliseconds))
-  (replace-match "example.json")
+  (replace-match doc)
   (- (current-inexact-milliseconds) begin))
