@@ -70,12 +70,7 @@ Lourdes Badillo, A01024232
   (sum-list (map touch futures)))
 
 ; Measure execution time 
-(define (timerSeq func arg1 arg2)
-  (define begin (current-inexact-milliseconds))
-  (sequential arg1 arg2)
-  (- (current-inexact-milliseconds) begin))
-
 (define (timerPar func arg1 arg2)
   (define begin (current-inexact-milliseconds))
-  (func arg1 arg2)
-  (- (current-inexact-milliseconds) begin))
+  (displayln (func arg1 arg2))
+  (displayln (- (current-inexact-milliseconds) begin)))
