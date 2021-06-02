@@ -10,7 +10,7 @@ Lourdes Badillo, A01024232
 ; Define if a number is prime
 (define (prime? n)
   (cond
-    ; 0 isn't prime
+    ; 0 and 1 aren't prime
     [(< n 2) #f]
     ; 2 is tho ;)
     [(equal? n 2) #t]
