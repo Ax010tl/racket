@@ -58,11 +58,13 @@ Reflexión sobre la solución planteada, los algoritmos implementados y sobre el
 
 - Utilizar Racket fue un gran reto para nosotros, tuvimos que cambiar la manera en la que pensamos al programar. Nos pareció muy interesante adoptar este nuevo paradigma de programación funcional, aprendiendo de sus posibilidades y múltiples retos. 
 
-- El algoritmo completo tiene un tiempo de ejecución de 8.35 milisegundos. 
-    - La función `replace-match` tomó 1.50 milisegundos
-    - Por lo que el resto del algoritmo tomó 4.21 milisegundos
+- Nos parece que para identificar tokens es un algoritmo bastante eficiente, pensamos que iba a tomar más tiempo debido a las expresiones regulares. Esto nos hizo apreciar aún más lo poderosas que son. 
 
-- Nos parece que es un algoritmo bastante eficiente, pensamos que iba a tomar más tiempo debido a las expresiones regulares. Esto nos hizo apreciar aun más lo poderosas que son. 
+- Nos dimos cuenta que, aunque el algoritmo concurrente es más rápido que el secuencial, estos podrían tener tiempos de ejecución similares. Por la manera en la que se distribuyen los archivos por thread, podría suceder que dos archivos muy largos sean procesados por el mismo thread, reduciendo la eficiencia del algoritmo.
+
+- Aprendimos que los threads son muy útiles, pero hay que saberlos usar según la capacidad del CPU. Si la cantidad de threads excede a la cantidad de cores del procesador, el programa se volverá significativamente más lento. 
+
+- Hay que recordar que aunque un algoritmo puede ser muy eficiente, siempre hay que considerar cómo se está utilizando, pues esto también es un factor importante para el funcionamiento óptimo del mismo. En este caso, esto implica el orden de los archivos y la cantidad de threads.
 
 ### Complejidad
 Calcular la complejidad del algoritmo basada en el número de iteraciones y contrástala con el tiempo obtenido.
@@ -74,15 +76,23 @@ Calcular la complejidad del algoritmo basada en el número de iteraciones y cont
 
 Al leerse el archivo solamente una vez, podemos obtener una complejidad de **O(n)** (donde __n__ es la cantidad de líneas en el archivo).
 
-El tiempo de ejecución fue 8.35 milisegundos. Teniendo una complejidad **O(n)**, consideramos que es un algoritmo eficiente; solo se realizan operaciones la cantidad de veces necesarias, reduciendo el malgasto de recursos.
+Consideramos que es un algoritmo eficiente; solo se realizan operaciones la cantidad de veces necesarias, reduciendo el malgasto de recursos.
+
+### Tiempo de ejecución
+| Cantidad de archivos  | Tiempo secuencial (ms)    | Tiempo  Paralelo (ms) | Speedup   |
+|-----------------------|---------------------------|-----------------------|-----------|
+| 4                     | 69                        | 65                    | 1.06      |
+| 5                     | 553775                    | 501989                | 1.10      |
 
 ## Ejemplos de ejecución
-Desde la línea de comandos de Racket, correr los siguientes comandos. La función `write-file` recibe el nombre del archivo a resaltar en el primer argumento y el nombre del archivo que se va a generar en el segundo.
+Desde la línea de comandos de Racket, correr los siguientes comandos. La función `write-files` recibe como argumento el nombre de la carpeta con los archivos a resaltar.
+
+La función `write-files-parallel` también recibe el nombre de la carpeta con los archivos a resaltar, además de la cantidad de threads en los que se quiera realizar la operación.
+
 ```lisp
 > (enter! "identify-tokens.rkt")
-> (write-file "example0.json" "result0.html")
-> (write-file "example1.json" "result1.html")
-> (write-file "example2.json" "result2.html")
-> (write-file "example3.json" "result3.html")
+> (write-files "examples")
+> (write-files-parallel "examples" 4)
 ```
-Puedes visualizar el archivo resultante utilizando el navegador web de tu elección.
+
+Los archivos resultantes se guardan en una carpeta llamada `results`. Puedes visualizarlos utilizando el navegador web de tu elección.

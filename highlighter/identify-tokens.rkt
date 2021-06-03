@@ -86,19 +86,13 @@ Lourdes Badillo, A01024232
 (define (make-threads files dir-path)
   (list (future (lambda ()
     ; Iterate files and call write-file
-    ; (map write-file (map string-append (make-list (string-append dir-path "/") (length files)) files))
     (let loop
       ([lst files])
         (cond
-          [(empty? files)]
+          [(empty? lst)]
           [else
             (write-file (string-append dir-path "/" (car lst)))
-            (loop (cdr files))
-          ]
-        )
-    )
-  )))
-)
+            (loop (cdr lst))]))))))
 
 ; Concurrent execution
 (define (write-files-parallel dir-path threads)
@@ -106,9 +100,9 @@ Lourdes Badillo, A01024232
   (if (not (directory-exists? "results"))
     (make-directory "results")
     #f)
-
+  ; Get all filenames
   (define files (map path->string (directory-list dir-path)))
-
+  ; Distribute files among files user indicated
   (let loop 
     ( [files files] [futures empty] [counter 1] [total-files (length files)])
     (cond
@@ -117,24 +111,10 @@ Lourdes Badillo, A01024232
       ; Add all groups of files that are the same size
       [(< counter threads)
         (let-values ([(head tail)  (split-at files (- (length files) (floor (/ total-files threads))))]) 
-          (loop head (append futures (make-threads tail dir-path)) (add1 counter) total-files)
-        )
-      ]
+          (loop head (append futures (make-threads tail dir-path)) (add1 counter) total-files))]
       ; Add final group of files
       [(= counter threads)
-        (loop empty (append futures (make-threads files dir-path)) counter total-files)
-      ]
-    )
-  )
-
-  ; Create each thread
-  ;(define futures (map make-threads range-min range-max))
-  ; Get threads going and sum each thread
-  ;(sum-list (map touch futures))
-)
-
-;10 archivos
-;3 threads
+        (loop empty (append futures (make-threads files dir-path)) counter total-files)])))
 
 
   ; Measure execution time for the whole algorithm, takes in "<filename>.json"
