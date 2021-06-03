@@ -7,6 +7,7 @@ Lourdes Badillo, A01024232
 
 #lang racket
 
+; Find tokens and replace them with what's necessary
 (define (replace-match in-path)
   ; Store the content in lines (string list)
   (define lines (file->lines in-path))
@@ -35,8 +36,10 @@ Lourdes Badillo, A01024232
           ; go to the next line of the document
           (loop (cdr lines) (append res (list dis-line))) ))))
 
-
-(define (write-file in-path out-path)
+; Create highlighted syntax HTML file for one JSON file
+(define (write-file in-path)
+  (define out-path
+    (regexp-replace #px"(?<=\\/)(.*?).json" in-path "../results/\\1.html"))
   ; Add HTML to the top
   (call-with-output-file out-path #:exists 'truncate
     (lambda (out)
@@ -64,8 +67,77 @@ Lourdes Badillo, A01024232
         </html>"
         out))))
 
+; Create highlighted syntax HTML file given a directory with JSON files
+(define (write-files dir-path)
+  ; Create results directory (if it doesn't exist)
+  (if (not (directory-exists? "results"))
+    (make-directory "results")
+    #f)
+  
+  (let loop
+    ; Get all files from directory
+    ([files (map path->string (directory-list dir-path))] [dir dir-path])
+    (cond
+      [(empty? files)]
+      [else
+        (write-file (string-append dir "/" (car files)))
+        (loop (cdr files) dir)])))
 
-; Measure execution time for the whole algorithm, takes in "<filename>.json"
+(define (make-threads files dir-path)
+  (list (future (lambda ()
+    ; Iterate files and call write-file
+    ; (map write-file (map string-append (make-list (string-append dir-path "/") (length files)) files))
+    (let loop
+      ([lst files])
+        (cond
+          [(empty? files)]
+          [else
+            (write-file (string-append dir-path "/" (car lst)))
+            (loop (cdr files))
+          ]
+        )
+    )
+  )))
+)
+
+; Concurrent execution
+(define (write-files-parallel dir-path threads)
+  ; Create results directory (if it doesn't exist)
+  (if (not (directory-exists? "results"))
+    (make-directory "results")
+    #f)
+
+  (define files (map path->string (directory-list dir-path)))
+
+  (let loop 
+    ( [files files] [futures empty] [counter 1] [total-files (length files)])
+    (cond
+      [(empty? files) 
+        (for-each touch futures)]
+      ; Add all groups of files that are the same size
+      [(< counter threads)
+        (let-values ([(head tail)  (split-at files (- (length files) (floor (/ total-files threads))))]) 
+          (loop head (append futures (make-threads tail dir-path)) (add1 counter) total-files)
+        )
+      ]
+      ; Add final group of files
+      [(= counter threads)
+        (loop empty (append futures (make-threads files dir-path)) counter total-files)
+      ]
+    )
+  )
+
+  ; Create each thread
+  ;(define futures (map make-threads range-min range-max))
+  ; Get threads going and sum each thread
+  ;(sum-list (map touch futures))
+)
+
+;10 archivos
+;3 threads
+
+
+  ; Measure execution time for the whole algorithm, takes in "<filename>.json"
 (define (timer doc)
   (define begin (current-inexact-milliseconds))
   (write-file doc "result.html")
