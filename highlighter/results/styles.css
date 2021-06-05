@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+
+body{   
+    font-family: 'Fira Code', monospace; 
+    background-color: #272822; /*oh si dark mode 😍*/
+    color: white;
+    white-space: pre;
+    margin: 0;
+    margin: 0 2vw;
+    width: 100vw;
+}
+
+h1{
+    text-align: center;
+}
+
+.strings{
+    color: #a9dc76;
+}
+
+.keys{
+    color: #78dce8; 
+}
+
+.numbers{
+    color: #ab9df2;
+}
+
+.chars{
+    color: #ffd866;
+}
+
+.bools{
+    color: #fc9867;
+}
+
+.special{
+    color: #ff6188;
+}
+
+footer{
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
