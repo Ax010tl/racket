@@ -1,10 +1,13 @@
-# Proyecto: JSON Highlighter
+# Proyecto: JSON Highlighter V2
 
 Lourdes Badillo, A01024232 <br>
 Valeria Pineda, A01023979 <br>
 Eduardo Villalpando, A01023646 <br>
 
-Para este proyecto se seleccionó la sintaxis de JSON (JavaScript Object Notation). Primero se definieron los tokens a identificar.
+## Sobre el proyecto
+Este proyecto es un resaltador de sintaxis de JSON (JavaScript Object Notation), el cual recibe archivos.json y genera archivos .html que pueden visualizarse en un navegador. <br>
+La primera versión del proyecto se ejecutaba únicamente de manera <b>secuencial</b>. Esta primera versión está disponible <a href="https://github.com/Ax010tl/racket/tree/firstHighlighter/highlighter">aquí</a>. <br>
+En la segunda versión, hemos implementado un algoritmo que se ejecuta de manera <b>paralela</b>. 
 
 ## Encontrar tipos de datos
 Utilizando **expresiones regulares**, se pueden identificar los siguientes tipos de dato correspondientes al estándar de JSON. 
@@ -46,6 +49,43 @@ Reemplazamos los tabs con cadenas de cuatro espacios
 [\t]
 ```
 
+## Complejidad
+Calcular la complejidad del algoritmo basada en el número de iteraciones y contrástala con el tiempo obtenido.
+
+- La solución planteada lee cada línea del archivo de manera recursiva: **O(n)**
+- Para cada línea, realiza 7 reemplazos usando sustituciones de expresiones regulares: **O(1)**
+- Posteriormente la nueva línea es añadida a una nueva lista: **O(1)**
+- La lista es devuelta en el caso base de la función recursiva: **O(1)**
+
+Al leerse el archivo solamente una vez, podemos obtener una complejidad de **O(n)** (donde __n__ es la cantidad de líneas en el archivo).
+
+Consideramos que es un algoritmo eficiente; solo se realizan operaciones la cantidad de veces necesarias, reduciendo el malgasto de recursos.
+
+## Tiempo de ejecución
+| Cantidad de archivos  | Tiempo secuencial (ms)    | Tiempo  Paralelo (ms) | Speedup   |
+|-----------------------|---------------------------|-----------------------|-----------|
+| 4                     | 69                        | 65                    | 1.06      |
+| 5                     | 553775                    | 501989                | 1.10      |
+
+## Ejemplos de ejecución
+Desde la línea de comandos de Racket, correr los siguientes comandos. 
+
+### Ejecución Secuencial 
+La función `write-files` recibe como argumento el nombre de la carpeta con los archivos a resaltar.
+```lisp
+> (enter! "identify-tokens.rkt")
+> (write-files "examples")
+```
+### Ejecución Paralela
+La función `write-files-parallel` también recibe el nombre de la carpeta con los archivos a resaltar, además de la cantidad de threads en los que se quiera realizar la operación.
+
+```lisp
+> (enter! "identify-tokens.rkt")
+> (write-files-parallel "examples" 4)
+```
+
+Los archivos resultantes se guardan en una carpeta llamada `results`. Puedes visualizarlos utilizando el navegador web de tu elección.
+
 ## Reflexión
 
 Reflexión sobre la solución planteada, los algoritmos implementados y sobre el tiempo de ejecución de estos.
@@ -66,33 +106,6 @@ Reflexión sobre la solución planteada, los algoritmos implementados y sobre el
 
 - Hay que recordar que aunque un algoritmo puede ser muy eficiente, siempre hay que considerar cómo se está utilizando, pues esto también es un factor importante para el funcionamiento óptimo del mismo. En este caso, esto implica el orden de los archivos y la cantidad de threads.
 
-### Complejidad
-Calcular la complejidad del algoritmo basada en el número de iteraciones y contrástala con el tiempo obtenido.
-
-- La solución planteada lee cada línea del archivo de manera recursiva: **O(n)**
-- Para cada línea, realiza 7 reemplazos usando sustituciones de expresiones regulares: **O(1)**
-- Posteriormente la nueva línea es añadida a una nueva lista: **O(1)**
-- La lista es devuelta en el caso base de la función recursiva: **O(1)**
-
-Al leerse el archivo solamente una vez, podemos obtener una complejidad de **O(n)** (donde __n__ es la cantidad de líneas en el archivo).
-
-Consideramos que es un algoritmo eficiente; solo se realizan operaciones la cantidad de veces necesarias, reduciendo el malgasto de recursos.
-
-### Tiempo de ejecución
-| Cantidad de archivos  | Tiempo secuencial (ms)    | Tiempo  Paralelo (ms) | Speedup   |
-|-----------------------|---------------------------|-----------------------|-----------|
-| 4                     | 69                        | 65                    | 1.06      |
-| 5                     | 553775                    | 501989                | 1.10      |
-
-## Ejemplos de ejecución
-Desde la línea de comandos de Racket, correr los siguientes comandos. La función `write-files` recibe como argumento el nombre de la carpeta con los archivos a resaltar.
-
-La función `write-files-parallel` también recibe el nombre de la carpeta con los archivos a resaltar, además de la cantidad de threads en los que se quiera realizar la operación.
-
-```lisp
-> (enter! "identify-tokens.rkt")
-> (write-files "examples")
-> (write-files-parallel "examples" 4)
-```
-
-Los archivos resultantes se guardan en una carpeta llamada `results`. Puedes visualizarlos utilizando el navegador web de tu elección.
+## Implicaciones éticas
+La programación en paralelo es posible debido al increíble progreso que ha habido en la computación. Como pudimos ver en este proyecto, así como en otros ejercicios, es una herramienta que nos permite mejorar los tiempos de ejecución de nuestros programas. Sin embargo, todas estas nuevas posibilidades implican nuevos riesgos. Así como nosotros podemos aprovechar las características de la programación paralela para generar archivos con los tokens identificados en menor tiempo, alguien podría aprovecharlas para infectar archivos, hacer spam o ataques informáticos de manera más veloz. <br>
+Como estudiantes de ingeniería de software debemos ser conscientes de las implicaciones de los programas que desarrollamos. Una de las mejores partes de esta carrera es que podemos crear proyectos de la nada, tan solo escribiendo en nuestra terminal. Pero esto también conlleva mucha responsabilidad, ya que nuestro código puede impactar a miles de personas. Es por esto que siempre debemos enfocarnos en generar proyectos que generen un impacto positivo en el mundo. 
