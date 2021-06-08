@@ -25,19 +25,16 @@ h1{
     color: #ab9df2;
 }
 
-.chars{
-    color: #ffd866;
-}
-
 .bools{
     color: #fc9867;
 }
 
-.special{
+.decorators{
     color: #ff6188;
 }
 
 footer{
+    margin-top: 200px;
     position: relative;
     left: 0;
     bottom: 0;
